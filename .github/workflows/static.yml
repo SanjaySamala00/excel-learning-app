@@ -1,0 +1,33 @@
+import streamlit as st
+import pandas as pd
+
+st.set_page_config(page_title="Excel for Data Analysts", layout="wide")
+
+st.title("📊 Excel Mastery: Basic to Pro for Data Analysis")
+
+# Navigation Sidebar
+level = st.sidebar.radio("Select Learning Level:", ["Basic", "Intermediate", "Advanced Pro"])
+
+if level == "Basic":
+    st.header("1. Core Functions & Data Cleaning")
+    st.markdown("""
+    **Key Concept:** `XLOOKUP` replaces legacy lookup tools like `VLOOKUP`.
+    """)
+    st.code("=XLOOKUP(lookup_value, lookup_array, return_array, [if_not_found])", language="excel")
+    
+    # Practice Playground
+    st.subheader("Practice Data")
+    df = pd.DataFrame({
+        "Employee ID": [101, 102, 103],
+        "Name": ["Alice", "Bob", "Charlie"],
+        "Department": ["Analytics", "Finance", "Marketing"]
+    })
+    st.dataframe(df)
+
+elif level == "Intermediate":
+    st.header("2. Aggregations & Dynamic Reports")
+    st.write("Master Pivot Tables, SUMIFS, and COUNTIFS for segment reporting.")
+
+elif level == "Advanced Pro":
+    st.header("3. Power Query & Dynamic Arrays")
+    st.write("Learn data transformations using FILTER, UNIQUE, and Power Query.")
