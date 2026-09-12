@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel Data Analyst Academy</title>
+    
+    <!-- Excel Interface (Luckysheet) Dependencies -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/luckysheet/dist/plugins/css/pluginsCss.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/luckysheet/dist/plugins/plugins.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/luckysheet/dist/css/luckysheet.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/luckysheet/dist/assets/iconfont/iconfont.css" />
+    
+    <script src="https://cdn.jsdelivr.net/npm/luckysheet/dist/plugins/js/plugin.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luckysheet/dist/luckysheet.umd.js"></script>
+
+    <style>
+        body { margin: 0; padding: 0; font-family: Segoe UI, sans-serif; display: flex; flex-direction: column; height: 100vh; }
+        header { background: #107c41; color: white; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; }
+        #controls { padding: 10px; background: #f3f3f3; border-bottom: 1px solid #ccc; display: flex; gap: 10px; }
+        button { padding: 8px 15px; background: #107c41; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #0b5c30; }
+        #excel-container { width: 100%; flex: 1; left: 0px; top: 0px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h2 style="margin: 0;">📊 Excel for Data Analysts (Basic to Pro)</h2>
+        <span>Zero Cost Web App</span>
+    </header>
+
+    <div id="controls">
+        <button onclick="loadModule(1)">Module 1: Basic Formulas & Clean</button>
+        <button onclick="loadModule(2)">Module 2: Lookups & Filters</button>
+        <button onclick="loadModule(3)">Module 3: Pro Aggregations</button>
+    </div>
+
+    <!-- Interactive Excel Canvas -->
+    <div id="excel-container"></div>
+
+    <script>
+        const modules = {
+            1: [
+                {
+                    name: "Basic Formulas",
+                    celldata: [
+                        { r: 0, c: 0, v: "Item" }, { r: 0, c: 1, v: "Units Sold" }, { r: 0, c: 2, v: "Unit Price ($)" }, { r: 0, c: 3, v: "Total Revenue ($)" },
+                        { r: 1, c: 0, v: "Laptop" }, { r: 1, c: 1, v: 10 }, { r: 1, c: 2, v: 800 }, { r: 1, c: 3, v: { f: "=B2*C2" } },
+                        { r: 2, c: 0, v: "Mouse" }, { r: 2, c: 1, v: 50 }, { r: 2, c: 2, v: 20 }, { r: 2, c: 3, v: { f: "=B3*C3" } },
+                        { r: 3, c: 0, v: "Keyboard" }, { r: 3, c: 1, v: 25 }, { r: 3, c: 2, v: 45 }, { r: 3, c: 3, v: { f: "=B4*C4" } },
+                        { r: 4, c: 0, v: "Grand Total" }, { r: 4, c: 1, v: { f: "=SUM(B2:B4)" } }, { r: 4, c: 2, v: "" }, { r: 4, c: 3, v: { f: "=SUM(D2:D4)" } }
+                    ]
+                }
+            ],
+            2: [
+                {
+                    name: "Data Lookup",
+                    celldata: [
+                        { r: 0, c: 0, v: "Emp ID" }, { r: 0, c: 1, v: "Name" }, { r: 0, c: 2, v: "Department" }, { r: 0, c: 3, v: "Salary" },
+                        { r: 1, c: 0, v: 101 }, { r: 1, c: 1, v: "Sarah" }, { r: 1, c: 2, v: "Data" }, { r: 1, c: 3, v: 85000 },
+                        { r: 2, c: 0, v: 102 }, { r: 2, c: 1, v: "Alex" }, { r: 2, c: 2, v: "Analytics" }, { r: 2, c: 3, v: 92000 },
+                        { r: 4, c: 0, v: "Lookup Test" }, { r: 4, c: 1, v: "Target Salary:" }, { r: 4, c: 2, v: { f: "=VLOOKUP(102, A2:D3, 4, FALSE)" } }
+                    ]
+                }
+            ],
+            3: [
+                {
+                    name: "Pro Analytics",
+                    celldata: [
+                        { r: 0, c: 0, v: "Region" }, { r: 0, c: 1, v: "Category" }, { r: 0, c: 2, v: "Sales ($)" },
+                        { r: 1, c: 0, v: "North" }, { r: 1, c: 1, v: "Tech" }, { r: 1, c: 2, v: 15000 },
+                        { r: 2, c: 0, v: "South" }, { r: 2, c: 1, v: "Tech" }, { r: 2, c: 2, v: 12000 },
+                        { r: 3, c: 0, v: "North" }, { r: 3, c: 1, v: "Furniture" }, { r: 3, c: 2, v: 9000 },
+                        { r: 5, c: 0, v: "North Total" }, { r: 5, c: 2, v: { f: '=SUMIF(A2:A4, "North", C2:C4)' } }
+                    ]
+                }
+            ]
+        };
+
+        function loadModule(moduleNum) {
+            luckysheet.destroy();
+            luckysheet.create({
+                container: 'excel-container',
+                title: "Excel Data Analyst Learning Suite",
+                lang: 'en',
+                showtoolbar: true,
+                showinfobar: true,
+                showsheetbar: true,
+                data: modules[moduleNum]
+            });
+        }
+
+        // Initialize with Module 1
+        window.onload = function () {
+            loadModule(1);
+        };
+    </script>
+</body>
+</html>
